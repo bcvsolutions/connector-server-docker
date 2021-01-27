@@ -1,0 +1,52 @@
+# Example compose file for Connector server
+
+version: '3.2'
+
+services:
+  connector-server:
+    image: connector-server:latest
+    container_name: connector-server
+    ports:
+      - 8759:8759
+    hostname: connector-server
+    environment:
+      - JAVA_XMS=768M
+      - JAVA_XMX=1536M
+      - TZ=Europe/Prague
+      - DOCKER_CONNECTOR_SRV_PASSFILE=/run/secrets/cserver.pwfile
+      - CSERVER_TRUSTSTORE=/opt/connector-server/connid-connector-server/conf/truststore.jks
+      - DOCKER_CONNECTOR_SRV_TRUSTSTORE_PASSFILE=/run/secrets/truststore.pwfile
+      - CERTS_PATH=/run/certs
+    volumes:
+        # Connector bundles
+      - type: bind
+        source: ./bundles
+        target: /opt/connector-server/connid-connector-server/bundles
+        read_only: true
+        # Key to connector server
+      - type: bind
+        source: ./cserver.pwfile
+        target: /run/secrets/cserver.pwfile
+        read_only: true
+        # Key to trust store
+      - type: bind
+        source: ./truststore.pwfile
+        target: /run/secrets/truststore.pwfile
+        read_only: true
+        # Trusted certificates
+      - type: bind
+        source: ./certs
+        target: /run/certs
+        read_only: true
+        # Certificate of winrm server
+      - type: bind
+        source: ./winrm_ca.pem
+        target: /opt/connectorserver/connid-connector-server/certs/winrm_ca.pem
+        read_only: true
+        # Scripts for winrm+ad connector
+      - type: bind
+        source: ./winrm_scripts
+        target: /run/winrm_scripts
+        read_only: true
+
+        
