@@ -1,6 +1,8 @@
 #!/bin/bash
 echo "[$0] Configuring Connector server password...";
 
+rm -rf $CSERVER_TRUSTSTORE
+
 if [ -z "${DOCKER_CONNECTOR_SRV_PASSFILE}" ]; then
     echo "[$0] DOCKER_CONNECTOR_SRV_PASSFILE not set";
 else
