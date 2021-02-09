@@ -14,7 +14,6 @@ services:
       - JAVA_XMX=1536M
       - DOCKER_CONNECTOR_SRV_PASSFILE=/run/secrets/cserver.pwfile
       - DOCKER_CONNECTOR_SRV_TRUSTSTORE_PASSFILE=/run/secrets/truststore.pwfile
-      - CERTS_PATH=/run/certs
       - TZ=Europe/Prague
     volumes:
         # Connector bundles
@@ -26,11 +25,6 @@ services:
       - type: bind
         source: ./cserver.pwfile
         target: /run/secrets/cserver.pwfile
-        read_only: true
-        # Key to trust store
-      - type: bind
-        source: ./truststore.pwfile
-        target: /run/secrets/truststore.pwfile
         read_only: true
         # Trusted certificates
       - type: bind
