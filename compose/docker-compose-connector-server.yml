@@ -1,0 +1,42 @@
+# Example compose file for Connector server
+
+version: '3.2'
+
+services:
+  connector-server:
+    image: bcv-connector-server:1.0-r0
+    container_name: connector-server
+    ports:
+      - 8759:8759
+    hostname: connector-server
+    environment:
+      - JAVA_XMS=256M
+      - JAVA_XMX=512M
+      - DOCKER_CONNECTOR_SRV_PASSFILE=/run/secrets/cserver.pwfile
+      - TZ=Europe/Prague
+    volumes:
+        # Connector bundles
+      - type: bind
+        source: ./bundles
+        target: /opt/connector-server/connid-connector-server/bundles
+        read_only: true
+        # Key to connector server
+      - type: bind
+        source: ./cserver.pwfile
+        target: /run/secrets/cserver.pwfile
+        read_only: true
+        # Trusted certificates
+      - type: bind
+        source: ./certs
+        target: /run/certs
+        read_only: true
+        # Certificate of winrm server
+      - type: bind
+        source: ./winrm_ca.pem
+        target: /opt/connector-server/connid-connector-server/certs/winrm_ca.pem
+        read_only: true
+        # Scripts for winrm+ad connector
+      - type: bind
+        source: ./winrm_scripts
+        target: /opt/connector-server/connid-connector-server/scripts/winrm_scripts
+        read_only: false
