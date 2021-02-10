@@ -7,22 +7,14 @@ fi
 if [ -z "${JAVA_XMX}" ]; then
   JAVA_XMX="1024M";
 fi
-if [ -z "${CSERVER_TRUSTSTORE}" ]; then
-  CSERVER_TRUSTSTORE="/opt/connector-server/connid-connector-server/conf/truststore.jks"
-fi
 
 JAVA_HOME="/usr/lib/jvm/java-openjdk";
 JAVA_OPTS="-Xms${JAVA_XMS} -Xmx${JAVA_XMX} -Djava.awt.headless=true -Djava.security.egd=file:/dev/./urandom -Djava.util.logging.config.file=conf/logging.properties";
 
-if [ -z "${DOCKER_CONNECTOR_SRV_TRUSTSTORE_PASSFILE}" ]; then
-    echo "[$0] DOCKER_CONNECTOR_SRV_TRUSTSTORE_PASSFILE not set";
+if [ -f "$CSERVER_TRUSTSTORE" ]; then
+    JAVA_OPTS="$JAVA_OPTS -Djavax.net.ssl.trustStore=$CSERVER_TRUSTSTORE";
 else
-    if [ -f "${DOCKER_CONNECTOR_SRV_TRUSTSTORE_PASSFILE}" ]; then
-    trustStorePassword=$(cat "$DOCKER_CONNECTOR_SRV_TRUSTSTORE_PASSFILE");  
-    JAVA_OPTS="$JAVA_OPTS -Djavax.net.ssl.trustStore=$CSERVER_TRUSTSTORE -Djavax.net.ssl.trustStorePassword=$trustStorePassword";
-    else
-    echo "[$0] DOCKER_CONNECTOR_SRV_TRUSTSTORE_PASSFILE not readable.";
-    fi
+      echo "[$0] WARNING: None Java truststore exists (this is ok if you do not trust any certificates).";
 fi
 
 
