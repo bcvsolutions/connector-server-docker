@@ -10,9 +10,9 @@ RUN yum install -y epel-release && \
 		yum install -y wget python36 psmisc sudo java-11-openjdk-headless java-11-openjdk-devel openssl git && \
 		yum clean all && \
 		pip3 install --upgrade pip && \
-		pip3 install pywinrm && \
-		pip3 install pywinrm[credssp]
-
+		pip3 install pywinrm==0.4.1 && \
+		pip3 install pywinrm[credssp]==0.4.1  
+ 
 RUN git clone --depth 1 --branch $CSERVER_VERSION https://github.com/bcvsolutions/connector-server.git /opt/connector-server/ && \
  	chmod 750 /opt/connector-server/ \
 	/opt/connector-server/connid-connector-server/bin/ \
