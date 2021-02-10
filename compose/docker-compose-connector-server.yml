@@ -4,16 +4,15 @@ version: '3.2'
 
 services:
   connector-server:
-    image: connector-server:latest
+    image: bcv-connector-server:1.0-r0
     container_name: connector-server
     ports:
       - 8759:8759
     hostname: connector-server
     environment:
-      - JAVA_XMS=768M
-      - JAVA_XMX=1536M
+      - JAVA_XMS=256M
+      - JAVA_XMX=512M
       - DOCKER_CONNECTOR_SRV_PASSFILE=/run/secrets/cserver.pwfile
-      - DOCKER_CONNECTOR_SRV_TRUSTSTORE_PASSFILE=/run/secrets/truststore.pwfile
       - TZ=Europe/Prague
     volumes:
         # Connector bundles
@@ -34,7 +33,7 @@ services:
         # Certificate of winrm server
       - type: bind
         source: ./winrm_ca.pem
-        target: /opt/connid-connector-server/certs/winrm_ca.pem
+        target: /opt/connector-server/connid-connector-server/certs/winrm_ca.pem
         read_only: true
         # Scripts for winrm+ad connector
       - type: bind
