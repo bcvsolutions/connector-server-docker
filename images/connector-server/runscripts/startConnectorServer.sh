@@ -12,7 +12,7 @@ JAVA_HOME="/usr/lib/jvm/java-openjdk";
 JAVA_OPTS="-Xms${JAVA_XMS} -Xmx${JAVA_XMX} -Djava.awt.headless=true -Djava.security.egd=file:/dev/./urandom -Djava.util.logging.config.file=conf/logging.properties";
 
 if [ -f "$CSERVER_TRUSTSTORE" ]; then
-    JAVA_OPTS="$JAVA_OPTS -Djavax.net.ssl.trustStore=$CSERVER_TRUSTSTORE";
+    JAVA_OPTS="$JAVA_OPTS -Djavax.net.ssl.trustStore=$CSERVER_TRUSTSTORE -Djavax.net.ssl.trustStorePassword=changeit";
 else
       echo "[$0] WARNING: None Java truststore exists (this is ok if you do not trust any certificates).";
 fi
