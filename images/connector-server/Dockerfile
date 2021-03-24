@@ -1,4 +1,5 @@
-FROM centos:8
+# mirrorred standard centos:8 image
+FROM repo.iamappliance.com:8443/centos:8
 
 ENV RUNSCRIPTS_PATH /runscripts
 ENV CSERVER_VERSION cs1.4.5.1-cf1.4.3.0-bcv1.0
@@ -11,8 +12,8 @@ RUN yum install -y epel-release && \
 		yum clean all && \
 		pip3 install --upgrade pip && \
 		pip3 install pywinrm==0.4.1 && \
-		pip3 install pywinrm[credssp]==0.4.1  
- 
+		pip3 install pywinrm[credssp]==0.4.1
+
 RUN git clone --depth 1 --branch $CSERVER_VERSION https://github.com/bcvsolutions/connector-server.git /opt/connector-server/ && \
  	chmod 750 /opt/connector-server/ \
 	/opt/connector-server/connid-connector-server/bin/ \
