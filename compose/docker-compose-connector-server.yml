@@ -14,6 +14,8 @@ services:
       - JAVA_XMX=512M
       - DOCKER_CONNECTOR_SRV_PASSFILE=/run/secrets/cserver.pwfile
       - TZ=Europe/Prague
+      # standard JDK loglevels apply: SEVERE, WARNING, INFO, CONFIG, FINE, FINER, FINEST, ALL, OFF
+      #- LOG_LEVEL=SEVERE
     volumes:
         # Connector bundles
       - type: bind
