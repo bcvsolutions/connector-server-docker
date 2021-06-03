@@ -15,7 +15,7 @@ services:
       - DOCKER_CONNECTOR_SRV_PASSFILE=/run/secrets/cserver.pwfile
       - TZ=Europe/Prague
       # standard JDK loglevels apply: SEVERE, WARNING, INFO, CONFIG, FINE, FINER, FINEST, ALL, OFF
-      #- LOG_LEVEL=SEVERE
+      #- LOG_LEVEL=INFO
     volumes:
         # Connector bundles
       - type: bind
