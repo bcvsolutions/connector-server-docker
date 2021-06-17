@@ -32,6 +32,8 @@ Image exposes port 8759 on which connector-server will be listening.
 ## Environment variables
 - Mandatory
     - **DOCKER_CONNECTOR_SRV_PASSFILE** - points image to the location of the file containing connector-server password
+- Optional
+    - **LOG_LEVEL** - Set the log level of logger. Default level is INFO. Possible values are SEVERE, WARNING, INFO, CONFIG, FINE, FINER, FINEST, ALL, OFF
 
 ## Mounted files and volumes
 - Mandatory
